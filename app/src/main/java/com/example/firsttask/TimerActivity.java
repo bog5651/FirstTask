@@ -1,29 +1,18 @@
 package com.example.firsttask;
 
 import android.app.TimePickerDialog;
-import android.graphics.Color;
-import android.graphics.Typeface;
-import android.icu.text.SimpleDateFormat;
 import android.os.AsyncTask;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.content.res.ResourcesCompat;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Layout;
 import android.util.Log;
-import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.TextSwitcher;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-import android.widget.ViewSwitcher;
-
-import java.util.concurrent.TimeUnit;
 
 public class TimerActivity extends AppCompatActivity implements View.OnClickListener, LocalTimer.onTimeChangeEventListner, TimePickerDialog.OnTimeSetListener {
 
@@ -32,9 +21,9 @@ public class TimerActivity extends AppCompatActivity implements View.OnClickList
 
     private Button startTimer;
 
-    private TextView tvMin;
-    private TextView tvSec;
-    private TextView tvHours;
+    private TimeFragment hourFragment;
+    private TimeFragment minFragment;
+    private TimeFragment secFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,10 +36,14 @@ public class TimerActivity extends AppCompatActivity implements View.OnClickList
         Button cancelTimer = findViewById(R.id.btnCancel);
         cancelTimer.setOnClickListener(this);
 
-        tvHours = findViewById(R.id.tvHours);
-        tvMin = findViewById(R.id.tvMin);
-        tvSec = findViewById(R.id.tvSec);
+        FragmentManager fragmentManager = getSupportFragmentManager();
 
+        hourFragment = (TimeFragment) fragmentManager.findFragmentById(R.id.fragmentHour);
+        minFragment = (TimeFragment) fragmentManager.findFragmentById(R.id.fragmentMin);
+        secFragment = (TimeFragment) fragmentManager.findFragmentById(R.id.fragmentSec);
+
+        if (secFragment != null)
+            secFragment.setColor(this, R.color.greyish_brown);
 
        /* Animation inAnimation = AnimationUtils.loadAnimation(this,
                 android.R.anim.fade_in);
@@ -60,7 +53,7 @@ public class TimerActivity extends AppCompatActivity implements View.OnClickList
         tvSec.setOutAnimation(outAnimation);
         tvSec.setFactory(this);*/
 
-        setZero();
+        //setZero();
     }
 
     @Override
@@ -89,9 +82,9 @@ public class TimerActivity extends AppCompatActivity implements View.OnClickList
             Log.d(LOG_TAG, "Timer end");
         } else {
             String times[] = TimeFormat.format(time);
-            tvHours.setText(times[0]);
-            tvMin.setText(times[1]);
-            tvSec.setText(times[2]);
+            hourFragment.setTime(times[0]);
+            minFragment.setTime(times[1]);
+            secFragment.setTime(times[2]);
         }
     }
 
@@ -104,9 +97,9 @@ public class TimerActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void setZero() {
-        tvHours.setText("00");
-        tvMin.setText("00");
-        tvSec.setText("00");
+        hourFragment.setTime("00");
+        minFragment.setTime("00");
+        secFragment.setTime("00");
     }
 
 
