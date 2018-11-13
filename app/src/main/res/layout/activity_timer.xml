@@ -37,7 +37,7 @@
     <fragment
         android:id="@+id/fragmentHour"
         android:name="com.example.firsttask.TimeFragment"
-        android:layout_width="55dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="89dp"
         android:layout_marginTop="568dp"

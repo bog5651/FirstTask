@@ -1,6 +1,8 @@
 package com.example.firsttask;
 
 import android.app.TimePickerDialog;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -8,11 +10,16 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.TextSwitcher;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
+import android.widget.ViewSwitcher;
 
 public class TimerActivity extends AppCompatActivity implements View.OnClickListener, LocalTimer.onTimeChangeEventListner, TimePickerDialog.OnTimeSetListener {
 
@@ -43,17 +50,9 @@ public class TimerActivity extends AppCompatActivity implements View.OnClickList
         secFragment = (TimeFragment) fragmentManager.findFragmentById(R.id.fragmentSec);
 
         if (secFragment != null)
-            secFragment.setColor(this, R.color.greyish_brown);
+            secFragment.setColor(R.color.greyish_brown);
 
-       /* Animation inAnimation = AnimationUtils.loadAnimation(this,
-                android.R.anim.fade_in);
-        Animation outAnimation = AnimationUtils.loadAnimation(this,
-                android.R.anim.fade_out);
-        tvSec.setInAnimation(inAnimation);
-        tvSec.setOutAnimation(outAnimation);
-        tvSec.setFactory(this);*/
-
-        //setZero();
+        setZero();
     }
 
     @Override
@@ -102,7 +101,6 @@ public class TimerActivity extends AppCompatActivity implements View.OnClickList
         secFragment.setTime("00");
     }
 
-
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         Log.d(LOG_TAG, "time set: time = " + (hourOfDay * 60 + minute) * 60 * 1000);
@@ -110,19 +108,4 @@ public class TimerActivity extends AppCompatActivity implements View.OnClickList
         timer = new LocalTimer(this);
         timer.execute((long) (hourOfDay * 60 + minute) * 60 * 1000);
     }
-
-    /*@Override
-    public View makeView() {
-        TextView textView = new TextView(this);
-        textView.setTextColor(Color.RED);
-        textView.setGravity(Gravity.CENTER_HORIZONTAL);
-        textView.setTypeface(Typeface.DEFAULT_BOLD);
-        //textView.setPadding(0, 4, 0, 0);
-        //textView.setTextScaleX((float) 1.2);
-        textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
-        //textView.setTypeface(ResourcesCompat.getFont(this, R.font.pfs_quare_sans_pro));
-        textView.setTextSize(36, TypedValue.COMPLEX_UNIT_SP);
-        //textView.setTextColor(ContextCompat.getColor(this, R.color.greyish_brown));
-        return textView;
-    }*/
 }
