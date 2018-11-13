@@ -1,6 +1,7 @@
 package com.example.firsttask;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -23,17 +24,18 @@ public class TimeFragment extends Fragment implements ViewSwitcher.ViewFactory {
 
     private TextSwitcher tsTime1;
     private TextSwitcher tsTime2;
-    private int color;
+    private int colorId;
     private String time = "AA";
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.clock_fragmet, null);
         Log.d(LOG_TAG, "onCreateView");
         context = getActivity();
-        setColor(R.color.tangerine); //цвет по умолчанию
 
         tsTime1 = v.findViewById(R.id.tvTime1);
         tsTime2 = v.findViewById(R.id.tvTime2);
+
+        setColor(R.color.tangerine); //цвет по умолчанию
 
         Animation inAnimation = AnimationUtils.loadAnimation(context, R.anim.flip_in);
         Animation outAnimation = AnimationUtils.loadAnimation(context, R.anim.flip_out);
@@ -56,14 +58,22 @@ public class TimeFragment extends Fragment implements ViewSwitcher.ViewFactory {
     }
 
     public void setColor(int id) {
-        color = ContextCompat.getColor(context, id);
+        colorId = id;
+        for (int i = 0; i < tsTime2.getChildCount(); i++) {
+            TextView tv = (TextView) tsTime2.getChildAt(i);
+            tv.setTextColor(Color.parseColor(context.getString(colorId)));
+        }
+        for (int i = 0; i < tsTime1.getChildCount(); i++) {
+            TextView tv = (TextView) tsTime1.getChildAt(i);
+            tv.setTextColor(Color.parseColor(context.getString(colorId)));
+        }
     }
 
     @Override
     public View makeView() {
+        Log.d(LOG_TAG, "makeView: color " + colorId);
         TextView textView = new TextView(context);
-        textView.setTextColor(color);
-//        textView.setTypeface(Typeface.DEFAULT_BOLD);
+        textView.setTextColor(Color.parseColor(context.getString(colorId)));
         textView.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL);
         textView.setPadding(0, 2, 0, 0);
         textView.setLetterSpacing((float) 0.2);

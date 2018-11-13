@@ -49,8 +49,11 @@ public class TimerActivity extends AppCompatActivity implements View.OnClickList
         minFragment = (TimeFragment) fragmentManager.findFragmentById(R.id.fragmentMin);
         secFragment = (TimeFragment) fragmentManager.findFragmentById(R.id.fragmentSec);
 
-        if (secFragment != null)
-            secFragment.setColor(R.color.greyish_brown);
+        //if (secFragment != null)
+        secFragment.setColor(R.color.greyish_brown);
+        secFragment.setColor(R.color.greyish_brown);
+        secFragment.setColor(R.color.greyish_brown);
+
 
         setZero();
     }
