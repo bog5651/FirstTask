@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+
+    <color name="dark">#1b1c22</color>
+    <color name="tangerine">#ff9a00</color>
+    <color name="slate_grey_two">#57575f</color>
+    <color name="greyish_brown">#5f5a54</color>
+
+</resources>

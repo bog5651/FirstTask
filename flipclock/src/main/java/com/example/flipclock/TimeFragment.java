@@ -1,4 +1,4 @@
-package com.example.firsttask;
+package com.example.flipclock;
 
 import android.content.Context;
 import android.graphics.Color;

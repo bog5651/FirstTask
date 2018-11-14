@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <fragment
+        android:id="@+id/fragmentHour"
+        android:name="com.example.flipclock.TimeFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:layout="@layout/clock_fragmet" />
+
+    <TextView
+        android:id="@+id/twoPoint"
+        android:layout_width="6dp"
+        android:layout_height="41dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="2dp"
+        android:layout_toEndOf="@+id/fragmentHour"
+        android:fontFamily="@font/pfs_quare_sans_pro_thin"
+        android:text="@string/two_point"
+        android:textColor="@color/tangerine"
+        android:textSize="36sp" />
+
+    <fragment
+        android:id="@+id/fragmentSec"
+        android:name="com.example.flipclock.TimeFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_toEndOf="@+id/twoPoint2"
+        tools:layout="@layout/clock_fragmet" />
+
+    <TextView
+        android:id="@+id/twoPoint2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_toEndOf="@+id/fragmentMin"
+        android:fontFamily="@font/pfs_quare_sans_pro_thin"
+        android:text="@string/two_point"
+        android:textColor="@color/slate_grey_two"
+        android:textSize="36sp" />
+
+    <fragment
+        android:id="@+id/fragmentMin"
+        android:name="com.example.flipclock.TimeFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_toEndOf="@+id/twoPoint"
+        tools:layout="@layout/clock_fragmet" />
+
+    <TextView
+        android:id="@+id/Hour"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/fragmentHour"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="2dp"
+        android:fontFamily="@font/pfs_quare_sans_pro_light"
+        android:text="@string/hour"
+        android:textColor="#57575f"
+        android:textSize="10sp" />
+
+    <TextView
+        android:id="@+id/Min"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/fragmentHour"
+        android:layout_marginStart="85dp"
+        android:layout_marginTop="2dp"
+        android:fontFamily="@font/pfs_quare_sans_pro_light"
+        android:text="@string/min"
+        android:textColor="@color/slate_grey_two"
+        android:textSize="10sp" />
+
+    <TextView
+        android:id="@+id/Sec"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/fragmentHour"
+        android:layout_marginStart="156dp"
+        android:layout_marginTop="2dp"
+        android:fontFamily="@font/pfs_quare_sans_pro_light"
+        android:text="@string/sec"
+        android:textColor="#57575f"
+        android:textSize="10sp" />
+</RelativeLayout>
