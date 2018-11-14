@@ -44,4 +44,10 @@ public class LocalTimer extends CountDownTimer {
     public long getTime() {
         return time;
     }
+
+    public long getCountDownInterval() {
+        return countDownInterval;
+    }
+
+
 }

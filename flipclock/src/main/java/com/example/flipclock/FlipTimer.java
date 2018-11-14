@@ -14,11 +14,14 @@ import java.util.concurrent.TimeUnit;
 public class FlipTimer extends RelativeLayout implements LocalTimer.onTimeChangeEventListener {
 
     private LocalTimer timer;
-    private String LOG_TAG = "TimerAct";
+    private String LOG_TAG = "FlipTimer";
 
     private TimeFragment hourFragment;
     private TimeFragment minFragment;
     private TimeFragment secFragment;
+
+    private long timeInMilliSec;
+    private boolean isPaused = true;
 
     private LocalTimer.onTimeChangeEventListener callback;
 
@@ -40,6 +43,7 @@ public class FlipTimer extends RelativeLayout implements LocalTimer.onTimeChange
         } catch (NullPointerException e) {
             Log.e(LOG_TAG, "NullPointerException");
         }
+
         String times[] = format(0);
         setTime(times);
     }
@@ -77,7 +81,14 @@ public class FlipTimer extends RelativeLayout implements LocalTimer.onTimeChange
     }
 
     public long getTime() {
-        return timer.getTime();
+        if (isPaused)
+            return timeInMilliSec;
+        else
+            return timer.getTime();
+    }
+
+    public boolean isPaused() {
+        return isPaused;
     }
 
     private void setTime(String time[]) {
@@ -87,7 +98,6 @@ public class FlipTimer extends RelativeLayout implements LocalTimer.onTimeChange
     }
 
     public void setTimer(long time) {
-        Log.d(LOG_TAG, "time set: time = " + time);
         if (timer != null)
             timer.cancel();
         timer = new LocalTimer(time, 1000);
@@ -101,11 +111,32 @@ public class FlipTimer extends RelativeLayout implements LocalTimer.onTimeChange
         }
         String times[] = format(0);
         setTime(times);
+        isPaused = true;
     }
 
     public void start() {
         if (timer != null)
             timer.start();
+        isPaused = false;
+    }
+
+    public void pause() {
+        isPaused = true;
+        if (timer != null) {
+            timeInMilliSec = timer.getTime();
+            timer.cancel();
+            timer = null;
+        } else {
+            timeInMilliSec = 0;
+        }
+    }
+
+    public void resume() {
+        if (isPaused) {
+            setTimer(timeInMilliSec);
+            start();
+            isPaused = false;
+        }
     }
 
     private String[] format(long time) {

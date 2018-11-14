@@ -1,8 +1,9 @@
 package com.example.firsttask;
 
 import android.app.TimePickerDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TimePicker;
@@ -28,9 +29,11 @@ public class TimerActivity extends AppCompatActivity implements View.OnClickList
 
         Button startTimer = findViewById(R.id.btnStart);
         Button cancelTimer = findViewById(R.id.btnCancel);
+        Button pause = findViewById(R.id.btnPause);
 
         startTimer.setOnClickListener(this);
         cancelTimer.setOnClickListener(this);
+        pause.setOnClickListener(this);
     }
 
     @Override
@@ -42,6 +45,13 @@ public class TimerActivity extends AppCompatActivity implements View.OnClickList
                 break;
             case R.id.btnCancel:
                 timer.stop();
+                break;
+            case R.id.btnPause:
+                if (timer.isPaused()) {
+                    timer.resume();
+                } else {
+                    timer.pause();
+                }
                 break;
         }
     }
