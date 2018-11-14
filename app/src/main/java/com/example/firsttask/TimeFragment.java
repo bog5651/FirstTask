@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
 import android.view.Gravity;
@@ -59,14 +58,23 @@ public class TimeFragment extends Fragment implements ViewSwitcher.ViewFactory {
 
     public void setColor(int id) {
         colorId = id;
-        for (int i = 0; i < tsTime2.getChildCount(); i++) {
-            TextView tv = (TextView) tsTime2.getChildAt(i);
-            tv.setTextColor(Color.parseColor(context.getString(colorId)));
-        }
         for (int i = 0; i < tsTime1.getChildCount(); i++) {
-            TextView tv = (TextView) tsTime1.getChildAt(i);
-            tv.setTextColor(Color.parseColor(context.getString(colorId)));
+            try {
+                TextView tv = (TextView) tsTime1.getChildAt(i);
+                tv.setTextColor(Color.parseColor(context.getString(colorId)));
+            } catch (NullPointerException e) {
+                Log.e(LOG_TAG, "NullPointer in setTextColor. Msg: " + e.getMessage());
+            }
         }
+        for (int i = 0; i < tsTime2.getChildCount(); i++) {
+            try {
+                TextView tv = (TextView) tsTime2.getChildAt(i);
+                tv.setTextColor(Color.parseColor(context.getString(colorId)));
+            } catch (NullPointerException e) {
+                Log.e(LOG_TAG, "NullPointer in setTextColor. Msg: " + e.getMessage());
+            }
+        }
+
     }
 
     @Override

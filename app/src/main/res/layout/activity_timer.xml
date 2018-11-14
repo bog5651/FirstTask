@@ -54,7 +54,7 @@
         android:id="@+id/twoPoint"
         android:layout_width="6dp"
         android:layout_height="41dp"
-        android:layout_marginStart="143dp"
+        android:layout_marginStart="144dp"
         android:layout_marginTop="568dp"
         android:layout_marginEnd="207dp"
         android:layout_marginBottom="31dp"

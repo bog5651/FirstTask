@@ -1,6 +1,5 @@
 package com.example.firsttask;
 
-
 import android.os.AsyncTask;
 import android.util.Log;
 

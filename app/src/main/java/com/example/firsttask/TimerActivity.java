@@ -1,25 +1,15 @@
 package com.example.firsttask;
 
 import android.app.TimePickerDialog;
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.AsyncTask;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.TextSwitcher;
-import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-import android.widget.ViewSwitcher;
 
 public class TimerActivity extends AppCompatActivity implements View.OnClickListener, LocalTimer.onTimeChangeEventListner, TimePickerDialog.OnTimeSetListener {
 
@@ -75,16 +65,11 @@ public class TimerActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onTimeChange(long time) {
-        Log.d(LOG_TAG, "onClick: time = " + time);
-        if (time == 0) {
-            Toast.makeText(this, "Timer end", Toast.LENGTH_LONG).show();
-            Log.d(LOG_TAG, "Timer end");
-        } else {
-            String times[] = TimeFormat.format(time);
-            hourFragment.setTime(times[0]);
-            minFragment.setTime(times[1]);
-            secFragment.setTime(times[2]);
-        }
+        Log.d(LOG_TAG, "onTimeChange: time = " + time);
+        String times[] = TimeFormat.format(time);
+        hourFragment.setTime(times[0]);
+        minFragment.setTime(times[1]);
+        secFragment.setTime(times[2]);
     }
 
     @Override
