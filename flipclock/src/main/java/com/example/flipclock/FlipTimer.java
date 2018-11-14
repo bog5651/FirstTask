@@ -1,7 +1,6 @@
 package com.example.flipclock;
 
 import android.content.Context;
-import android.os.CountDownTimer;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.util.AttributeSet;
@@ -20,6 +19,8 @@ public class FlipTimer extends RelativeLayout implements LocalTimer.onTimeChange
     private TimeFragment hourFragment;
     private TimeFragment minFragment;
     private TimeFragment secFragment;
+
+    private LocalTimer.onTimeChangeEventListener callback;
 
     public FlipTimer(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -48,17 +49,38 @@ public class FlipTimer extends RelativeLayout implements LocalTimer.onTimeChange
         Log.d(LOG_TAG, "onTimeChange: time = " + time);
         String times[] = format(time);
         setTime(times);
+        if (callback != null) {
+            callback.onTimeChange(time);
+        }
     }
 
     @Override
     public void onTimeEnd() {
-        //Toast.makeText(this, "Timer end", Toast.LENGTH_LONG).show();
         Log.d(LOG_TAG, "Timer end");
         String times[] = format(0);
         setTime(times);
+        if (callback != null) {
+            callback.onTimeEnd();
+        }
     }
 
-    public void setTime(String time[]) {
+    public void setOnTimeChangeEventListener(LocalTimer.onTimeChangeEventListener callback) {
+        this.callback = callback;
+    }
+
+    public void removeOnTimeChangeEventListener() {
+        this.callback = null;
+    }
+
+    public LocalTimer.onTimeChangeEventListener getOnTimeChangeEventListener() {
+        return this.callback;
+    }
+
+    public long getTime() {
+        return timer.getTime();
+    }
+
+    private void setTime(String time[]) {
         hourFragment.setTime(time[0]);
         minFragment.setTime(time[1]);
         secFragment.setTime(time[2]);
@@ -66,9 +88,10 @@ public class FlipTimer extends RelativeLayout implements LocalTimer.onTimeChange
 
     public void setTimer(long time) {
         Log.d(LOG_TAG, "time set: time = " + time);
+        if (timer != null)
+            timer.cancel();
         timer = new LocalTimer(time, 1000);
-        timer.setOnTimeChangeEventListner(this);
-
+        timer.setOnTimeChangeEventListener(this);
     }
 
     public void stop() {
@@ -84,7 +107,6 @@ public class FlipTimer extends RelativeLayout implements LocalTimer.onTimeChange
         if (timer != null)
             timer.start();
     }
-
 
     private String[] format(long time) {
         String Result[] = new String[3];
