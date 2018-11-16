@@ -49,6 +49,7 @@ public class FlipTimer extends RelativeLayout implements LocalTimer.onTimeChange
 
     @Override
     public void onTimeChange(long time) {
+        timeInMilliSec = time;
         Log.d(LOG_TAG, "onTimeChange: time = " + time);
         String times[] = format(time);
         setTime(times);
@@ -59,6 +60,7 @@ public class FlipTimer extends RelativeLayout implements LocalTimer.onTimeChange
 
     @Override
     public void onTimeEnd() {
+        timeInMilliSec = 0;
         Log.d(LOG_TAG, "Timer end");
         String times[] = format(0);
         setTime(times);
