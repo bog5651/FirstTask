@@ -13,12 +13,12 @@ public class LocalTimer extends CountDownTimer {
     private String LOG_TAG = "LocalTimer";
     private onTimeChangeEventListener callback;
 
-    private long time;
+    private long timeInMilliSec;
     private long countDownInterval;
 
     public LocalTimer(long millisInFuture, long countDownInterval) {
         super(millisInFuture, countDownInterval);
-        time = millisInFuture;
+        timeInMilliSec = millisInFuture;
         this.countDownInterval = countDownInterval;
     }
 
@@ -26,12 +26,16 @@ public class LocalTimer extends CountDownTimer {
         this.callback = callback;
     }
 
+    public void removeOnTimeChangeEventListener() {
+        this.callback = null;
+    }
+
     @Override
     public void onTick(long millisUntilFinished) {
         if (callback != null) {
             callback.onTimeChange(millisUntilFinished);
         }
-        time = millisUntilFinished;
+        timeInMilliSec = millisUntilFinished;
     }
 
     @Override
@@ -42,12 +46,10 @@ public class LocalTimer extends CountDownTimer {
     }
 
     public long getTime() {
-        return time;
+        return timeInMilliSec;
     }
 
     public long getCountDownInterval() {
         return countDownInterval;
     }
-
-
 }

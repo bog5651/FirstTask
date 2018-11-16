@@ -20,6 +20,7 @@ public class FlipTimer extends RelativeLayout implements LocalTimer.onTimeChange
     private TimeFragment minFragment;
     private TimeFragment secFragment;
 
+    public final static long MAX_TIME = ((99 * 60 + 59) * 60 + 59) * 1000; //99 часов, 59 минут, 59 секунд
     private long timeInMilliSec;
     private boolean isPaused = true;
 
@@ -97,17 +98,33 @@ public class FlipTimer extends RelativeLayout implements LocalTimer.onTimeChange
         secFragment.setTime(time[2]);
     }
 
-    public void setTimer(long time) {
-        if (timer != null)
-            timer.cancel();
-        timer = new LocalTimer(time, 1000);
-        timer.setOnTimeChangeEventListener(this);
+    public void setTimer(long timeInMilliSec) {
+        if (timeInMilliSec > MAX_TIME) // если хоят установить больше максимального
+            timeInMilliSec = MAX_TIME;
+        if (timeInMilliSec > 0) { //запрет на установку отрицательного числа
+            if (timer != null) {
+                timer.cancel();
+                timer.removeOnTimeChangeEventListener();
+                timer = null;
+            }
+            this.timeInMilliSec = timeInMilliSec;
+            timer = new LocalTimer(timeInMilliSec, 1000);
+            timer.setOnTimeChangeEventListener(this);
+        }
+    }
+
+    public void addTime(long timeInMilliSec) {
+        if (timeInMilliSec != 0) {
+            setTimer(timer.getTime() + timeInMilliSec);
+            start();
+        }
     }
 
     public void stop() {
         if (timer != null) {
             timer.cancel();
             timer = null;
+            this.timeInMilliSec = 0;
         }
         String times[] = format(0);
         setTime(times);
@@ -115,19 +132,23 @@ public class FlipTimer extends RelativeLayout implements LocalTimer.onTimeChange
     }
 
     public void start() {
-        if (timer != null)
-            timer.start();
-        isPaused = false;
+        if (this.timeInMilliSec > 0) {
+            if (timer != null)
+                timer.start();
+            isPaused = false;
+        }
     }
 
     public void pause() {
-        isPaused = true;
-        if (timer != null) {
-            timeInMilliSec = timer.getTime();
-            timer.cancel();
-            timer = null;
-        } else {
-            timeInMilliSec = 0;
+        if (!isPaused) {
+            isPaused = true;
+            if (timer != null) {
+                timeInMilliSec = timer.getTime();
+                timer.cancel();
+                timer = null;
+            } else {
+                timeInMilliSec = 0;
+            }
         }
     }
 

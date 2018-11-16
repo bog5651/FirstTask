@@ -59,6 +59,7 @@ public class TimerActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         timer.setTimer((hourOfDay * 60 + minute) * 60 * 1000);
+//        timer.setTimer((89 * 60 + 34) * 60 * 1000);
         timer.start();
     }
 
