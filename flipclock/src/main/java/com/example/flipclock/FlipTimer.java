@@ -109,6 +109,8 @@ public class FlipTimer extends RelativeLayout implements LocalTimer.onTimeChange
             timer = new LocalTimer(timeInMilliSec, 1000);
             timer.setOnTimeChangeEventListener(this);
             setTime(format(timeInMilliSec));
+            if (!isPaused)
+                start();
         }
     }
 
@@ -136,11 +138,16 @@ public class FlipTimer extends RelativeLayout implements LocalTimer.onTimeChange
     }
 
     public void start() {
-        if (this.timeInMilliSec > 0) {
-            if (timer != null)
+        if (timer != null)
+            timer.start();
+        else {
+            if (isPaused) {
+                setTimer(timeInMilliSec);
                 timer.start();
-            isPaused = false;
+            }
         }
+        isPaused = false;
+
     }
 
     public void pause() {
