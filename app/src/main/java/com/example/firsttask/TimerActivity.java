@@ -3,7 +3,6 @@ package com.example.firsttask;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TimePicker;
@@ -27,19 +26,23 @@ public class TimerActivity extends AppCompatActivity implements View.OnClickList
 
         timer.setOnTimeChangeEventListener(this);
 
-        Button startTimer = findViewById(R.id.btnStart);
+        Button setTimer = findViewById(R.id.btnSetTimer);
         Button cancelTimer = findViewById(R.id.btnCancel);
         Button pause = findViewById(R.id.btnPause);
+        Button add = findViewById(R.id.btnAdd);
+        Button start = findViewById(R.id.btnStart);
 
-        startTimer.setOnClickListener(this);
+        setTimer.setOnClickListener(this);
         cancelTimer.setOnClickListener(this);
         pause.setOnClickListener(this);
+        add.setOnClickListener(this);
+        start.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.btnStart:
+            case R.id.btnSetTimer:
                 TimePickerDialog dialog = new TimePickerDialog(this, this, 0, 0, true);
                 dialog.show();
                 break;
@@ -53,6 +56,12 @@ public class TimerActivity extends AppCompatActivity implements View.OnClickList
                     timer.pause();
                 }
                 break;
+            case R.id.btnAdd:
+                timer.addTime(((1 * 60 + 1) * 60 + 20) * 1000);
+                break;
+            case R.id.btnStart:
+                timer.start();
+                break;
         }
     }
 
@@ -60,7 +69,6 @@ public class TimerActivity extends AppCompatActivity implements View.OnClickList
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
         timer.setTimer((hourOfDay * 60 + minute) * 60 * 1000);
 //        timer.setTimer((89 * 60 + 34) * 60 * 1000);
-        timer.start();
     }
 
     @Override

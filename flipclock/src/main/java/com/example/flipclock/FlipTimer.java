@@ -44,9 +44,7 @@ public class FlipTimer extends RelativeLayout implements LocalTimer.onTimeChange
         } catch (NullPointerException e) {
             Log.e(LOG_TAG, "NullPointerException");
         }
-
-        String times[] = format(0);
-        setTime(times);
+        setTimer(0);
     }
 
     @Override
@@ -101,7 +99,7 @@ public class FlipTimer extends RelativeLayout implements LocalTimer.onTimeChange
     public void setTimer(long timeInMilliSec) {
         if (timeInMilliSec > MAX_TIME) // если хоят установить больше максимального
             timeInMilliSec = MAX_TIME;
-        if (timeInMilliSec > 0) { //запрет на установку отрицательного числа
+        if (timeInMilliSec >= 0) { //запрет на установку отрицательного числа
             if (timer != null) {
                 timer.cancel();
                 timer.removeOnTimeChangeEventListener();
@@ -110,13 +108,19 @@ public class FlipTimer extends RelativeLayout implements LocalTimer.onTimeChange
             this.timeInMilliSec = timeInMilliSec;
             timer = new LocalTimer(timeInMilliSec, 1000);
             timer.setOnTimeChangeEventListener(this);
+            setTime(format(timeInMilliSec));
         }
     }
 
     public void addTime(long timeInMilliSec) {
         if (timeInMilliSec != 0) {
+            if (timer == null) {
+                setTimer(0);
+            }
             setTimer(timer.getTime() + timeInMilliSec);
-            start();
+            if (!isPaused)
+                start();
+
         }
     }
 
